@@ -1,10 +1,11 @@
 import asyncio
+import os
 import aiohttp
 import discord
 from discord.ext import commands, tasks
 
 # --- CONFIGURATION ---
-BOT_TOKEN = "MTU1NTU4NTY0MjU2MDIyNTI5Mg.Gz6k4y.mHc-SE0CG30uVG21SetgZcUoOmB0sXRFjREM1M"
+BOT_TOKEN = os.getenv("DISCORD_TOKEN")
 NOTIFICATION_CHANNEL_ID = 1555602738526683267
 CHECK_INTERVAL_SECONDS = 15
 
@@ -148,7 +149,7 @@ async def track_user_presences():
         game_title = await fetch_game_info(place_id)
         game_text = f" | Playing: **{game_title}**"
       elif p_type == 3:
-        emoji = "🛠️️"
+        emoji = "🛠️"
         game_text = " | **In Roblox Studio**"
 
       msg = (
@@ -220,4 +221,3 @@ async def status(ctx):
 
 
 bot.run(BOT_TOKEN)
-
