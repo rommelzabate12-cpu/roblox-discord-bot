@@ -1,8 +1,29 @@
 import asyncio
 import os
+from threading import Thread
 import aiohttp
 import discord
 from discord.ext import commands, tasks
+from flask import Flask
+
+# --- DUMMY WEB SERVER FOR FREE RENDER HOSTING ---
+app = Flask("")
+
+
+@app.route("/")
+def home():
+  return "Bot is alive!"
+
+
+def run_web():
+  app.run(host="0.0.0.0", port=8080)
+
+
+def keep_alive():
+  t = Thread(target=run_web)
+  t.daemon = True
+  t.start()
+
 
 # --- CONFIGURATION ---
 BOT_TOKEN = os.getenv("DISCORD_TOKEN")
@@ -220,4 +241,5 @@ async def status(ctx):
   await ctx.send(embed=embed)
 
 
+keep_alive()
 bot.run(BOT_TOKEN)
